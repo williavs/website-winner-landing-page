@@ -1,103 +1,207 @@
-import Image from "next/image";
+'use client';
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Timeline } from "@/components/ui/timeline";
+import { Hero } from "@/components/ui/hero-designali-landing";
+import { Footer } from "@/components/ui/footer-section";
+import { FeaturesSectionWithHoverEffects } from "@/components/blocks/feature-section-with-hover-effects";
+import { PricingSection } from "@/components/blocks/pricing-section";
+import { Zap, ArrowDownToDot, Moon, Sun } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+import React from "react";
+import { useTheme } from "@/components/ui/theme-provider";
+import { TestimonialsColumn } from "@/components/blocks/testimonials-columns-1";
+import { testimonials, featuresContent } from "@/content";
+import {
+  IconBadge,
+  IconListDetails,
+  IconFileText,
+  IconShieldCheck,
+  IconPresentation,
+  IconUserCheck,
+  IconGlobe,
+  IconStar,
+} from "@tabler/icons-react";
+
+const pricingTiers = [
+  {
+    name: "🟢 Good\nField-Ready Toolkit",
+    price: 297,
+    description: "AI Prompt Packs (3), 1 SOP Template, 1 Micro Course (on-demand)",
+    includes: [
+      "AI Prompt Packs (3)",
+      "1 SOP Template",
+      "1 Micro Course (on-demand)",
+    ],
+    badge: "Most Popular",
+    highlight: false,
+    icon: null,
+  },
+  {
+    name: "🟡 Better\nTactical Training Pass",
+    price: 997,
+    description: "Everything in Toolkit, Access to 1 Live Training, Extra SOP Pack, Replay access",
+    includes: [
+      "Everything in Toolkit",
+      "Access to 1 Live Training",
+      "Extra SOP Pack",
+      "Replay access",
+    ],
+    badge: "Best Value",
+    highlight: true,
+    icon: null,
+  },
+  {
+    name: "🔴 Best\nCustom SOP Sprint",
+    price: 3000,
+    description: "2-week engagement, Custom SOP development, Workflow Audit, Department briefing deck",
+    includes: [
+      "2-week engagement",
+      "Custom SOP development",
+      "Workflow Audit",
+      "Department briefing deck",
+    ],
+    badge: "Premium",
+    highlight: false,
+    icon: null,
+  },
+];
+
+const iconMap: { [key: string]: React.ReactNode } = {
+  IconBadge: <IconBadge />,
+  IconListDetails: <IconListDetails />,
+  IconFileText: <IconFileText />,
+  IconShieldCheck: <IconShieldCheck />,
+  IconPresentation: <IconPresentation />,
+  IconUserCheck: <IconUserCheck />,
+  IconGlobe: <IconGlobe />,
+  IconStar: <IconStar />,
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // Demo data for Timeline
+  const timelineData = [
+    {
+      title: "Launch",
+      content: <p>We launched our product and got our first users!</p>,
+    },
+    {
+      title: "Growth",
+      content: <p>We grew to 10,000 users and expanded our team.</p>,
+    },
+    {
+      title: "Today",
+      content: <p>We continue to innovate and serve our community.</p>,
+    },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const { theme, setTheme } = useTheme();
+
+  // Split testimonials into columns
+  const firstColumn = testimonials.slice(0, testimonials.length / 3 );
+  const secondColumn = testimonials.slice(testimonials.length / 3, (testimonials.length / 3) * 2);
+  const thirdColumn = testimonials.slice((testimonials.length / 3) * 2);
+
+  return (
+    <main className="flex flex-col items-center gap-16 py-8">
+      {/* Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <Toggle
+          variant="outline"
+          className="group size-9 data-[state=on]:bg-transparent data-[state=on]:hover:bg-muted"
+          pressed={theme === "dark"}
+          onPressedChange={() => setTheme(theme === "dark" ? "light" : "dark")}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          <Moon
+            size={16}
+            strokeWidth={2}
+            className="shrink-0 scale-0 opacity-0 transition-all group-data-[state=on]:scale-100 group-data-[state=on]:opacity-100"
+            aria-hidden="true"
+          />
+          <Sun
+            size={16}
+            strokeWidth={2}
+            className="absolute shrink-0 scale-100 opacity-100 transition-all group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0"
+            aria-hidden="true"
+          />
+        </Toggle>
+      </div>
+
+      {/* Hero Section */}
+      <Hero />
+
+      {/* Features Section */}
+      <section className="w-full flex flex-col items-center">
+        <FeaturesSectionWithHoverEffects
+          features={featuresContent.map((feature) => ({
+            ...feature,
+            icon: iconMap[feature.icon as keyof typeof iconMap] || null,
+          }))}
+        />
+      </section>
+
+      <Separator className="w-1/2" />
+
+      {/* Pricing Section */}
+      <section className="w-full flex flex-col items-center">
+        <PricingSection tiers={pricingTiers} />
+      </section>
+
+      <Separator className="w-1/2" />
+
+      {/* Testimonials Section */}
+      <section className="w-full flex flex-col items-center">
+        <div className="bg-background my-20 relative w-full">
+          <div className="container z-10 mx-auto">
+            <div className="flex flex-col items-center justify-center max-w-[540px] mx-auto">
+              <div className="flex justify-center">
+                <div className="border py-1 px-4 rounded-lg">Testimonials</div>
+              </div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5">
+                What our users say
+              </h2>
+              <p className="text-center mt-5 opacity-75">
+                See what our customers have to say about us.
+              </p>
+            </div>
+            <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[740px] overflow-hidden">
+              <TestimonialsColumn testimonials={firstColumn} duration={15} />
+              <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
+              <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      <Separator className="w-1/2" />
+
+      {/* Card Demo Section */}
+      <section className="w-full flex flex-col items-center">
+        <Card className="max-w-md w-full">
+          <CardHeader>
+            <CardTitle>Demo Card</CardTitle>
+            <CardDescription>This is a simple card demo using the Card component.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Cards are great for grouping related content and actions.</p>
+          </CardContent>
+          <CardFooter>
+            <Button>Learn More</Button>
+          </CardFooter>
+        </Card>
+      </section>
+
+      <Separator className="w-1/2" />
+
+      {/* Timeline Section */}
+      <section className="w-full flex flex-col items-center">
+        <Timeline data={timelineData} />
+      </section>
+
+      {/* Footer Section */}
+      <Footer />
+    </main>
   );
 }
