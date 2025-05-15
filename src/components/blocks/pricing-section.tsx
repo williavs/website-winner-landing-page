@@ -94,18 +94,11 @@ function PricingSection({ tiers, className }: PricingSectionProps) {
               )}
               <div className="p-8 flex-1">
                 <div className="flex items-center justify-between mb-4">
-                  <div
-                    className={cn(
-                      "p-3 rounded-xl",
-                      tier.highlight
-                        ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
-                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400",
-                    )}
-                  >
-                    {tier.icon}
+                  <div className="p-3 rounded-xl">
+                    <span style={{ fontSize: '2rem', lineHeight: 1 }}>{tier.name.split('\n')[0]}</span>
                   </div>
                   <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-                    {tier.name}
+                    {tier.name.split('\n')[1] || tier.name}
                   </h3>
                 </div>
                 <div className="mb-6">

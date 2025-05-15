@@ -95,9 +95,12 @@ export function PricingCard({
             <div>
               <CardHeader className="p-0">
                 <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-3xl font-bold">{title}</CardTitle>
-                    <CardDescription className="mt-2">{description}</CardDescription>
+                  <div className="flex items-center gap-2">
+                    <span style={{ fontSize: '2rem', lineHeight: 1 }}>{title.split('\n')[0]}</span>
+                    <div>
+                      <CardTitle className="text-3xl font-bold">{title.split('\n')[1] || title}</CardTitle>
+                      <CardDescription className="mt-2">{description}</CardDescription>
+                    </div>
                   </div>
                 </div>
               </CardHeader>
