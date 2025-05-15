@@ -175,25 +175,6 @@ export default function Home() {
         </div>
       </section>
 
-      <Separator className="w-1/2" />
-
-      {/* Card Demo Section */}
-      <section className="w-full flex flex-col items-center">
-        <Card className="max-w-md w-full">
-          <CardHeader>
-            <CardTitle>Demo Card</CardTitle>
-            <CardDescription>This is a simple card demo using the Card component.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Cards are great for grouping related content and actions.</p>
-          </CardContent>
-          <CardFooter>
-            <Button>Learn More</Button>
-          </CardFooter>
-        </Card>
-      </section>
-
-      <Separator className="w-1/2" />
 
       {/* Timeline Section */}
       <section className="w-full flex flex-col items-center">
